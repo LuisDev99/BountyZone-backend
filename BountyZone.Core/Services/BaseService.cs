@@ -31,7 +31,7 @@ namespace BountyZone.Core.Services
         {
             var entities = _repository.GetAll();
 
-            if (entities == null || entities.Any())
+            if (entities == null || !entities.Any())
             {
                 return ServiceResult<IEnumerable<T>>.NotFoundResult($"No {nameof(T)}s found");
             }
