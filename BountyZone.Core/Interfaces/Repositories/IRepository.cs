@@ -11,10 +11,14 @@ namespace BountyZone.Core.Interfaces
 
         IEnumerable<T> Filter(Expression<Func<T, bool>> predicate);
 
-        T GetById(int id);
+        T GetByID(int id);
 
         T Add(T entity);
 
+        void Delete(T entity);
+
         void Update(T entity);
+
+        void Patch(T entity);
     }
 }
