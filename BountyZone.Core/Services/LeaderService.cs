@@ -1,4 +1,5 @@
 ﻿using BountyZone.Core.Entities;
+using BountyZone.Core.Helpers;
 using BountyZone.Core.Interfaces;
 using BountyZone.Core.Interfaces.Repositories;
 using System;
@@ -23,7 +24,7 @@ namespace BountyZone.Core.Services
         {
             var victims = _leaderRepository.GetPopularVictims();
 
-            if(victims == null || !victims.Any())
+            if (Validators.IsListNullOrEmpty(victims))
             {
                 return ServiceResult<IEnumerable<Leader>>.NotFoundResult("There are no victims at this moment....");
             }

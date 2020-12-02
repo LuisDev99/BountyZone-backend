@@ -1,4 +1,5 @@
-﻿using BountyZone.Core.Interfaces;
+﻿using BountyZone.Core.Helpers;
+using BountyZone.Core.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace BountyZone.Core.Services
 {
     public class BaseService<T> : IBaseService<T>
     {
-        private readonly IRepository<T> _repository;
+        protected readonly IRepository<T> _repository;
 
         public BaseService(IRepository<T> repository)
         {
@@ -31,7 +32,7 @@ namespace BountyZone.Core.Services
         {
             var entities = _repository.GetAll();
 
-            if (entities == null || !entities.Any())
+            if (Validators.IsListNullOrEmpty(entities))
             {
                 return ServiceResult<IEnumerable<T>>.NotFoundResult($"No {nameof(T)}s found");
             }
