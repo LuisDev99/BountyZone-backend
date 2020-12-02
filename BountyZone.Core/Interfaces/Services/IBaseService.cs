@@ -12,10 +12,10 @@ namespace BountyZone.Core.Interfaces
 
         ServiceResult<T> Create(T data);
 
-        ServiceResult<T> Delete(int entityID);
+        ServiceResult<T> Delete(T entity);
 
-        ServiceResult<T> Update(T data);
+        ServiceResult<T> Update(T entity);
 
-        ServiceResult<T> Patch(T data);
+        ServiceResult<T> Patch(T entity);
     }
 }
