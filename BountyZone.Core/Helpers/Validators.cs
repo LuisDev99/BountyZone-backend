@@ -9,7 +9,7 @@ namespace BountyZone.Core.Helpers
     {
         public static bool IsListNullOrEmpty<T>(IEnumerable<T> list)
         {
-            return list == null || list.Any();
+            return list == null || !list.Any();
         }
     }
 }
