@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BountyZone.Infrastructure.Migrations
 {
     [DbContext(typeof(BountyZoneDbContext))]
-    [Migration("20201203035715_InitialMigyy")]
-    partial class InitialMigyy
+    [Migration("20201203054505_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,7 +60,7 @@ namespace BountyZone.Infrastructure.Migrations
                     b.ToTable("Bounties");
                 });
 
-            modelBuilder.Entity("BountyZone.Core.Entities.EventLog", b =>
+            modelBuilder.Entity("BountyZone.Core.Entities.Event", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -185,7 +185,7 @@ namespace BountyZone.Infrastructure.Migrations
                     b.Navigation("Victim");
                 });
 
-            modelBuilder.Entity("BountyZone.Core.Entities.EventLog", b =>
+            modelBuilder.Entity("BountyZone.Core.Entities.Event", b =>
                 {
                     b.HasOne("BountyZone.Core.Entities.Hunter", "Hunter")
                         .WithMany()

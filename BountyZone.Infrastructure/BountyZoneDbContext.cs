@@ -15,9 +15,9 @@ namespace BountyZone.Infrastructure
 
         }
 
-        public DbSet<Bounty> Bounties { get; set; }
+        public DbSet<Event> Events { get; set; }
 
-        public DbSet<Event> EventLogs { get; set; }
+        public DbSet<Bounty> Bounties { get; set; }
 
         public DbSet<Hunter> Hunters { get; set; }
 

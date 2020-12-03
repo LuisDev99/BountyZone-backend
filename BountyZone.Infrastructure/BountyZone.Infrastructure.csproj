@@ -16,4 +16,8 @@
     <ProjectReference Include="..\BountyZone.Core\BountyZone.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>
