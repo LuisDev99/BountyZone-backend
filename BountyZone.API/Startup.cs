@@ -34,6 +34,11 @@ namespace BountyZone.API
         {
 
             services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(x =>
+                x.UseMemberCasing()
+            );
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BountyZone.API", Version = "v1" });
