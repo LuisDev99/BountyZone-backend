@@ -122,6 +122,26 @@ namespace BountyZone.API.Controllers
             return Ok();
         }
 
+        // POST api/<LeadersController>
+        [HttpPost("place-bounty")]
+        public ActionResult PlaceBountyOnVictim([FromBody] AddBounty value)
+        {
+            var serviceResponse = _leaderService.PlaceBountyOnVictim(new Bounty
+            {
+                Time = value.Time,
+                Price = value.Price,
+                LeaderID = value.LeaderID,
+                VictimID = value.VictimID,
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            return Ok();
+        }
+
         // PUT api/<LeadersController>/5
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] AddLeader value)
