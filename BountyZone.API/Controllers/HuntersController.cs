@@ -102,8 +102,27 @@ namespace BountyZone.API.Controllers
 
         // PUT api/<HuntersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] AddHunter value)
         {
+            var serviceResponse = _hunterService.Update(new Hunter
+            {
+                ID = id,
+                Guns = value.Guns,
+                Bribes = value.Bribes,
+                PlayerID = value.PlayerID
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            return Ok();
         }
 
         // DELETE api/<HuntersController>/5
