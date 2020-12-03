@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BountyZone.API.Models;
+using BountyZone.Core.Enums;
+using BountyZone.Core.Interfaces.Services;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +14,38 @@ namespace BountyZone.API.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
+        private readonly IEventService _eventService;
+
+        public EventsController(IEventService eventService)
+        {
+            _eventService = eventService;
+        }
+
         // GET: api/<EventLogsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<EventDTO>> Get()
         {
-            return new string[] { "value1", "value2" };
-        }
+            var serviceResponse = _eventService.GetAll();
 
-        // GET api/<EventLogsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
 
-        // POST api/<EventLogsController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
 
-        // PUT api/<EventLogsController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+            var events = serviceResponse.Result;
 
-        // DELETE api/<EventLogsController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+            return Ok(events.Select(eventt => new EventDTO
+            {
+                ID = eventt.ID,
+                HunterID = eventt.HunterID,
+                LeaderID = eventt.LeaderID,
+                VictimID = eventt.VictimID
+            }));
+        }       
     }
 }
