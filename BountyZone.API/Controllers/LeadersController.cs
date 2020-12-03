@@ -104,8 +104,28 @@ namespace BountyZone.API.Controllers
 
         // PUT api/<LeadersController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, [FromBody] AddLeader value)
         {
+            var serviceResponse = _leaderService.Update(new Leader { 
+                ID = id, 
+                Money = value.Money,
+                PlayerID = value.PlayerID,
+                Reputation = value.Reputation,
+                SuccessfulAttacks = value.SuccessfulAttacks,
+                SuccessfulDefends = value.SuccessfulDefends,
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            return Ok();
         }
 
         // DELETE api/<LeadersController>/5
