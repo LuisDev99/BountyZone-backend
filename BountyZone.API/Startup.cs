@@ -1,7 +1,14 @@
+using BountyZone.Core.Interfaces;
+using BountyZone.Core.Interfaces.Repositories;
+using BountyZone.Core.Interfaces.Services;
+using BountyZone.Core.Services;
+using BountyZone.Infrastructure;
+using BountyZone.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,7 +30,6 @@ namespace BountyZone.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -32,9 +38,20 @@ namespace BountyZone.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BountyZone.API", Version = "v1" });
             });
+
+            services.AddDbContext<BountyZoneDbContext>((options) =>
+                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
+
+            services.AddScoped<IHunterRepository, HunterRepository>();
+            services.AddScoped<ILeaderRepository, LeaderRepository>();
+            
+            services.AddScoped<IEventLogService, EventLogService>();
+            services.AddScoped<IHunterService, HunterService>();
+            services.AddScoped<ILeaderService, LeaderService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
