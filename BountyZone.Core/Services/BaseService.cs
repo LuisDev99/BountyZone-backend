@@ -24,7 +24,7 @@ namespace BountyZone.Core.Services
                 return ServiceResult<T>.SuccessResult(newEntity);
             } catch(Exception)
             {
-                return ServiceResult<T>.ErrorResult($"Error while creating {nameof(T)} entity");
+                return ServiceResult<T>.ErrorResult($"Error while creating {typeof(T).Name} entity");
             }
         }
 
@@ -34,7 +34,7 @@ namespace BountyZone.Core.Services
 
             if (Validators.IsListNullOrEmpty(entities))
             {
-                return ServiceResult<IEnumerable<T>>.NotFoundResult($"No {nameof(T)}s found");
+                return ServiceResult<IEnumerable<T>>.NotFoundResult($"No {typeof(T).Name}s found");
             }
 
             return ServiceResult<IEnumerable<T>>.SuccessResult(entities);
@@ -46,7 +46,7 @@ namespace BountyZone.Core.Services
 
             if (entity == null)
             {
-                return ServiceResult<T>.NotFoundResult($"Entity {nameof(T)} with ID {entityID} was not found");
+                return ServiceResult<T>.NotFoundResult($"Entity {typeof(T).Name} with ID {entityID} was not found");
             }
 
             return ServiceResult<T>.SuccessResult(entity);
@@ -60,7 +60,7 @@ namespace BountyZone.Core.Services
                 return ServiceResult<T>.SuccessResult(entity);
             } catch(Exception)
             {
-                return ServiceResult<T>.ErrorResult($"Unable to delete {nameof(T)} entity");
+                return ServiceResult<T>.ErrorResult($"Unable to delete {typeof(T).Name} entity");
             }
         }        
 
@@ -72,7 +72,7 @@ namespace BountyZone.Core.Services
                 return ServiceResult<T>.SuccessResult(entity);
             } catch(Exception)
             {
-                return ServiceResult<T>.ErrorResult($"Unable to update {nameof(T)} entity");
+                return ServiceResult<T>.ErrorResult($"Unable to update {typeof(T).Name} entity");
             }
         }
 
@@ -85,7 +85,7 @@ namespace BountyZone.Core.Services
             }
             catch (Exception)
             {
-                return ServiceResult<T>.ErrorResult($"Unable to update property {nameof(TProperty)} for {nameof(T)} entity");
+                return ServiceResult<T>.ErrorResult($"Unable to update property {typeof(T).Name} for {typeof(T).Name} entity");
             }
         }
     }
