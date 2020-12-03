@@ -2,6 +2,7 @@
 using BountyZone.Core.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace BountyZone.Infrastructure.Repositories
@@ -14,12 +15,8 @@ namespace BountyZone.Infrastructure.Repositories
 
         public IEnumerable<Leader> GetPopularVictims()
         {
-            throw new NotImplementedException();
+            return _dbContext.Leaders.OrderByDescending(leader => leader.Reputation).Take(50).ToList();
         }
-
-        public Bounty PlaceBountyOn(int victimID, int leaderID)
-        {
-            throw new NotImplementedException();
-        }
+     
     }
 }

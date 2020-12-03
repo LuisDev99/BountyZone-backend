@@ -11,12 +11,15 @@ namespace BountyZone.Core.Services
 {
     public class LeaderService : BaseService<Leader>, ILeaderService
     {
+        private readonly IRepository<Bounty> _bountyBaseRepository;
         private readonly ILeaderRepository _leaderRepository;
 
         public LeaderService(
-            IRepository<Leader> repository, 
+            IRepository<Leader> repository,
+            IRepository<Bounty> bountyBaseRepository,
             ILeaderRepository leaderRepository) : base(repository)
         {
+            _bountyBaseRepository = bountyBaseRepository;
             _leaderRepository = leaderRepository;
         }
 
@@ -32,16 +35,16 @@ namespace BountyZone.Core.Services
             return ServiceResult<IEnumerable<Leader>>.SuccessResult(victims);
         }
 
-        public ServiceResult<Bounty> PlaceBountyOn(int victimID, int leaderID)
+        public ServiceResult<Bounty> PlaceBountyOnVictim(Bounty bounty)
         {
-            var bounty = _leaderRepository.PlaceBountyOn(victimID, leaderID);
+            var newBounty = _bountyBaseRepository.Add(bounty);
 
-            if(bounty == null)
+            if(newBounty == null)
             {
                 return ServiceResult<Bounty>.ErrorResult("The bounty could not be place on the victim");
             }
 
-            return ServiceResult<Bounty>.SuccessResult(bounty);
+            return ServiceResult<Bounty>.SuccessResult(newBounty);
         }
     }
 }

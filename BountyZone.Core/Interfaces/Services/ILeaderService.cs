@@ -9,6 +9,6 @@ namespace BountyZone.Core.Interfaces
     {
         ServiceResult<IEnumerable<Leader>> GetPopularVictims();
 
-        ServiceResult<Bounty> PlaceBountyOn(int victimID, int leaderID);
+        ServiceResult<Bounty> PlaceBountyOnVictim(Bounty bounty);
     }
 }
