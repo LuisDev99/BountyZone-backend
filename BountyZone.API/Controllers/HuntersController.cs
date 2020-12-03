@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BountyZone.API.Models;
+using BountyZone.Core.Enums;
+using BountyZone.Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace BountyZone.API.Controllers
 {
@@ -12,11 +13,38 @@ namespace BountyZone.API.Controllers
     [ApiController]
     public class HuntersController : ControllerBase
     {
+        private readonly IHunterService _hunterService;
+
+        public HuntersController(IHunterService hunterService)
+        {
+            _hunterService = hunterService;
+        }
+
         // GET: api/<HuntersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<HunterDTO>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var serviceResponse = _hunterService.GetAll();
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            var hunters = serviceResponse.Result;
+
+            return Ok(hunters.Select(hunter => new HunterDTO
+            {
+                ID = hunter.ID,
+                Guns = hunter.Guns,
+                Bribes = hunter.Bribes,
+                PlayerID = hunter.PlayerID,
+            }));
         }
 
         // GET api/<HuntersController>/5
