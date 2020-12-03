@@ -11,5 +11,9 @@ namespace BountyZone.Core.Entities
         public string NickName { get; set; }
 
         public string Password { get; set; }
+
+        public int PlayerRoleID { get; set; }
+
+        public PlayerRole PlayerRole { get; set; }
     }
 }
