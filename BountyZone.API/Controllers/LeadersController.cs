@@ -53,9 +53,31 @@ namespace BountyZone.API.Controllers
 
         // GET api/<LeadersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<LeaderDTO> Get(int id)
         {
-            return "value";
+            var serviceResponse = _leaderService.GetByID(id);
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            var leader = serviceResponse.Result;
+
+            return Ok( new LeaderDTO
+            {
+                ID = leader.ID,
+                Money = leader.Money,
+                PlayerID = leader.PlayerID,
+                Reputation = leader.Reputation,
+                SuccessfulAttacks = leader.SuccessfulAttacks,
+                SuccessfulDefends = leader.SuccessfulDefends
+            });
         }
 
         // POST api/<LeadersController>

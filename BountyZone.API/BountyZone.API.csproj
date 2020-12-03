@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\BountyZone.Core\BountyZone.Core.csproj" />
     <ProjectReference Include="..\BountyZone.Infrastructure\BountyZone.Infrastructure.csproj" />
   </ItemGroup>

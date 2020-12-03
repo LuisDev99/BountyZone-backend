@@ -47,7 +47,7 @@ namespace BountyZone.API
             services.AddScoped<IHunterRepository, HunterRepository>();
             services.AddScoped<ILeaderRepository, LeaderRepository>();
             
-            services.AddScoped<IEventLogService, EventLogService>();
+            services.AddScoped<IEventService, EventService>();
             services.AddScoped<IHunterService, HunterService>();
             services.AddScoped<ILeaderService, LeaderService>();
         }
