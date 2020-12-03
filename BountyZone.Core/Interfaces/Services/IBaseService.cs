@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq.Expressions;
 
 namespace BountyZone.Core.Interfaces
 {
@@ -16,6 +16,6 @@ namespace BountyZone.Core.Interfaces
 
         ServiceResult<T> Update(T entity);
 
-        ServiceResult<T> Patch(T entity);
+        ServiceResult<T> Patch<TProperty>(T entity, Expression<Func<T, TProperty>> propertyExpression);
     }
 }

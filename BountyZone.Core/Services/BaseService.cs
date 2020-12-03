@@ -2,8 +2,8 @@
 using BountyZone.Core.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Linq.Expressions;
+
 
 namespace BountyZone.Core.Services
 {
@@ -22,7 +22,7 @@ namespace BountyZone.Core.Services
             {
                 var newEntity = _repository.Add(data);
                 return ServiceResult<T>.SuccessResult(newEntity);
-            } catch(Exception e)
+            } catch(Exception)
             {
                 return ServiceResult<T>.ErrorResult($"Error while creating {nameof(T)} entity");
             }
@@ -58,7 +58,7 @@ namespace BountyZone.Core.Services
             {
                 _repository.Delete(entity);
                 return ServiceResult<T>.SuccessResult(entity);
-            } catch(Exception e)
+            } catch(Exception)
             {
                 return ServiceResult<T>.ErrorResult($"Unable to delete {nameof(T)} entity");
             }
@@ -70,20 +70,20 @@ namespace BountyZone.Core.Services
             {
                 _repository.Update(entity);
                 return ServiceResult<T>.SuccessResult(entity);
-            } catch(Exception e)
+            } catch(Exception)
             {
                 return ServiceResult<T>.ErrorResult($"Unable to update {nameof(T)} entity");
             }
         }
 
-        public ServiceResult<T> Patch(T entity)
+        public ServiceResult<T> Patch<TProperty>(T entity, Expression<Func<T, TProperty>> propertyExpression)
         {
             try
             {
-                _repository.Patch(entity);
+                _repository.Patch(entity, propertyExpression);
                 return ServiceResult<T>.SuccessResult(entity);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return ServiceResult<T>.ErrorResult($"Unable to update properties for {nameof(T)} entity");
             }
