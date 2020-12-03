@@ -49,9 +49,29 @@ namespace BountyZone.API.Controllers
 
         // GET api/<HuntersController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<HunterDTO> Get(int id)
         {
-            return "value";
+            var serviceResponse = _hunterService.GetByID(id);
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            var hunter = serviceResponse.Result;
+
+            return Ok(new HunterDTO
+            {
+                ID = hunter.ID,
+                Guns = hunter.Guns,
+                Bribes = hunter.Bribes,
+                PlayerID = hunter.PlayerID,
+            });
         }
 
         // POST api/<HuntersController>
