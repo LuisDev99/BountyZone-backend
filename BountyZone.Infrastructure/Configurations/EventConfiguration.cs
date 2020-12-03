@@ -7,9 +7,9 @@ using System.Text;
 
 namespace BountyZone.Infrastructure.Configurations
 {
-    public class EventLogConfiguration : IEntityTypeConfiguration<EventLog>
+    public class EventConfiguration : IEntityTypeConfiguration<Event>
     {
-        public void Configure(EntityTypeBuilder<EventLog> builder)
+        public void Configure(EntityTypeBuilder<Event> builder)
         {
             builder.HasKey(x => x.ID);
 

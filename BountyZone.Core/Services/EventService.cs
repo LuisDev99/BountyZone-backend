@@ -7,9 +7,9 @@ using System.Text;
 
 namespace BountyZone.Core.Services
 {
-    public class EventLogService : BaseService<EventLog>, IEventLogService
+    public class EventService : BaseService<Event>, IEventService
     {
-        public EventLogService(IRepository<EventLog> repository) : base(repository)
+        public EventService(IRepository<Event> repository) : base(repository)
         {
         }
     }

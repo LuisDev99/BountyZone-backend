@@ -17,7 +17,7 @@ namespace BountyZone.Infrastructure
 
         public DbSet<Bounty> Bounties { get; set; }
 
-        public DbSet<EventLog> EventLogs { get; set; }
+        public DbSet<Event> EventLogs { get; set; }
 
         public DbSet<Hunter> Hunters { get; set; }
 
@@ -29,7 +29,7 @@ namespace BountyZone.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new BountyConfiguration());
-            modelBuilder.ApplyConfiguration(new EventLogConfiguration());
+            modelBuilder.ApplyConfiguration(new EventConfiguration());
             modelBuilder.ApplyConfiguration(new HunterConfiguration());
             modelBuilder.ApplyConfiguration(new LeaderConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerConfiguration());

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BountyZone.Core.Interfaces.Services
 {
-    public interface IEventLogService : IBaseService<EventLog>
+    public interface IEventService : IBaseService<Event>
     {
 
     }

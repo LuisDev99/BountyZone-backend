@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BountyZone.Core.Entities
 {
-    public class EventLog : BaseEntity
+    public class Event : BaseEntity
     {
         public int LeaderID { get; set; }
 
