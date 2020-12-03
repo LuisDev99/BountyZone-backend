@@ -3,15 +3,17 @@ using System;
 using BountyZone.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BountyZone.Infrastructure.Migrations
 {
     [DbContext(typeof(BountyZoneDbContext))]
-    partial class BountyZoneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201203073955_AddPlayerRoleTable")]
+    partial class AddPlayerRoleTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -25,6 +25,8 @@ namespace BountyZone.Infrastructure
 
         public DbSet<Player> Players { get; set; }
 
+        public DbSet<PlayerRole> PlayerRoles { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +35,7 @@ namespace BountyZone.Infrastructure
             modelBuilder.ApplyConfiguration(new HunterConfiguration());
             modelBuilder.ApplyConfiguration(new LeaderConfiguration());
             modelBuilder.ApplyConfiguration(new PlayerConfiguration());
+            modelBuilder.ApplyConfiguration(new PlayerRoleConfiguration());
         }
     }
 }
