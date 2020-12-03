@@ -59,16 +59,16 @@ namespace BountyZone.API.Controllers
                 return BadRequest(serviceResponse.Error);
             }
 
-            var leaders = serviceResponse.Result;
+            var victims = serviceResponse.Result;
 
-            return Ok(leaders.Select(leader => new LeaderDTO
+            return Ok(victims.Select(victims => new LeaderDTO
             {
-                ID = leader.ID,
-                Money = leader.Money,
-                PlayerID = leader.PlayerID,
-                Reputation = leader.Reputation,
-                SuccessfulAttacks = leader.SuccessfulAttacks,
-                SuccessfulDefends = leader.SuccessfulDefends
+                ID = victims.ID,
+                Money = victims.Money,
+                PlayerID = victims.PlayerID,
+                Reputation = victims.Reputation,
+                SuccessfulAttacks = victims.SuccessfulAttacks,
+                SuccessfulDefends = victims.SuccessfulDefends
             }));
         }
 
