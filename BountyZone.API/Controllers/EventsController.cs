@@ -32,11 +32,6 @@ namespace BountyZone.API.Controllers
                 return BadRequest(serviceResponse.Error);
             }
 
-            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
-            {
-                return NotFound(serviceResponse.Error);
-            }
-
             var events = serviceResponse.Result;
 
             return Ok(events.Select(eventt => new EventDTO

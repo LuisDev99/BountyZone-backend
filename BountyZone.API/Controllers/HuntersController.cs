@@ -33,11 +33,6 @@ namespace BountyZone.API.Controllers
                 return BadRequest(serviceResponse.Error);
             }
 
-            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
-            {
-                return NotFound(serviceResponse.Error);
-            }
-
             var hunters = serviceResponse.Result;
 
             return Ok(hunters.Select(hunter => new HunterDTO

@@ -33,11 +33,30 @@ namespace BountyZone.API.Controllers
             if (serviceResponse.ResponseCode == ResponseCode.Error)
             {
                 return BadRequest(serviceResponse.Error);
-            }
+            }           
 
-            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            var leaders = serviceResponse.Result;
+
+            return Ok(leaders.Select(leader => new LeaderDTO
             {
-                return NotFound(serviceResponse.Error);
+                ID = leader.ID,
+                Money = leader.Money,
+                PlayerID = leader.PlayerID,
+                Reputation = leader.Reputation,
+                SuccessfulAttacks = leader.SuccessfulAttacks,
+                SuccessfulDefends = leader.SuccessfulDefends
+            }));
+        }
+
+        // GET: api/<LeadersController>
+        [HttpGet("/popular-victims")]
+        public ActionResult<IEnumerable<LeaderDTO>> GetPopularVictims()
+        {
+            var serviceResponse = _leaderService.GetPopularVictims();
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
             }
 
             var leaders = serviceResponse.Result;
