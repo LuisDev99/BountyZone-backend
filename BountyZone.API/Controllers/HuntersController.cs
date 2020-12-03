@@ -1,4 +1,6 @@
 ﻿using BountyZone.API.Models;
+using BountyZone.API.Models.InsertModels;
+using BountyZone.Core.Entities;
 using BountyZone.Core.Enums;
 using BountyZone.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -76,8 +78,26 @@ namespace BountyZone.API.Controllers
 
         // POST api/<HuntersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] AddHunter value)
         {
+            var serviceResponse = _hunterService.Create(new Hunter
+            {
+                Guns = value.Guns,
+                Bribes = value.Bribes,
+                PlayerID = value.PlayerID
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            return Ok();
         }
 
         // PUT api/<HuntersController>/5
