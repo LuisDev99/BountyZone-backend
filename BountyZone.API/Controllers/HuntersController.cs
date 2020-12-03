@@ -44,6 +44,29 @@ namespace BountyZone.API.Controllers
             }));
         }
 
+        // GET: api/<HuntersController>
+        [HttpGet("bounties")]
+        public ActionResult<IEnumerable<BountyDTO>> GetBounties()
+        {
+            var serviceResponse = _hunterService.GetAvailableBounties();
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            var bounties = serviceResponse.Result;
+
+            return Ok(bounties.Select(bounty => new BountyDTO
+            {
+                ID = bounty.ID,
+                Time = bounty.Time,
+                Price = bounty.Price,
+                LeaderID = bounty.LeaderID,
+                VictimID = bounty.VictimID,                
+            }));
+        }
+
         // GET api/<HuntersController>/5
         [HttpGet("{id}")]
         public ActionResult<HunterDTO> Get(int id)
