@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
+
 
 namespace BountyZone.Core.Interfaces
 {
@@ -19,6 +19,6 @@ namespace BountyZone.Core.Interfaces
 
         void Update(T entity);
 
-        void Patch(T entity);
+        void Patch<TProperty>(T entity, Expression<Func<T, TProperty>> propertyExpression);
     }
 }
