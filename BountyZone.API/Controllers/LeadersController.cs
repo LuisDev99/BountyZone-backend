@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BountyZone.API.Models;
+using BountyZone.Core.Enums;
+using BountyZone.Core.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +15,40 @@ namespace BountyZone.API.Controllers
     [ApiController]
     public class LeadersController : ControllerBase
     {
+        private readonly ILeaderService _leaderService;
+
+        public LeadersController(ILeaderService leaderService)
+        {
+            _leaderService = leaderService;
+        }
+
         // GET: api/<LeadersController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<LeaderDTO> Get()
         {
-            return new string[] { "value1", "value2" };
+            var serviceResponse = _leaderService.GetAll();
+
+            if(serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            var leaders = serviceResponse.Result;
+
+            return Ok(leaders.Select(leader => new LeaderDTO
+            {
+                ID = leader.ID,
+                Money = leader.Money,
+                PlayerID = leader.PlayerID,
+                Reputation = leader.Reputation,
+                SuccessfulAttacks = leader.SuccessfulAttacks,
+                SuccessfulDefends = leader.SuccessfulDefends
+            }));
         }
 
         // GET api/<LeadersController>/5
