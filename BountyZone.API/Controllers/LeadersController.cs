@@ -1,4 +1,6 @@
 ﻿using BountyZone.API.Models;
+using BountyZone.API.Models.InsertModels;
+using BountyZone.Core.Entities;
 using BountyZone.Core.Enums;
 using BountyZone.Core.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -82,8 +84,22 @@ namespace BountyZone.API.Controllers
 
         // POST api/<LeadersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult Post([FromBody] AddLeader value)
         {
+            var serviceResponse = _leaderService.Create(new Leader { 
+                Money = value.Money,
+                PlayerID = value.PlayerID,
+                Reputation = value.Reputation,
+                SuccessfulAttacks = value.SuccessfulAttacks,
+                SuccessfulDefends = value.SuccessfulDefends,
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            return Ok();
         }
 
         // PUT api/<LeadersController>/5
