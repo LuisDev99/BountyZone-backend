@@ -9,8 +9,6 @@ namespace BountyZone.API.Models.InsertModels
     {
         public int Price { get; set; }
 
-        public bool Bribed { get; set; }
-
         public DateTime Time { get; set; }
 
         public bool IsConfirmed { get; set; }
