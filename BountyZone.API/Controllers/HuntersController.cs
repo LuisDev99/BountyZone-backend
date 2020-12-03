@@ -127,8 +127,24 @@ namespace BountyZone.API.Controllers
 
         // DELETE api/<HuntersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var serviceResponse = _hunterService.Delete(new Hunter
+            {
+                ID = id,
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            return Ok();
         }
     }
 }
