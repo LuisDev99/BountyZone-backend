@@ -7,6 +7,6 @@ namespace BountyZone.Core.Interfaces.Repositories
 {
     public interface IHunterRepository
     {
-        IEnumerable<Bounty> GetAvailableBounties();
+        Bounty ConfirmBounty(int bountyID, int hunterID);
     }
 }
