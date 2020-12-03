@@ -26,7 +26,7 @@ namespace BountyZone.API.Controllers
 
         // GET: api/<LeadersController>
         [HttpGet]
-        public ActionResult<LeaderDTO> Get()
+        public ActionResult<IEnumerable<LeaderDTO>> Get()
         {
             var serviceResponse = _leaderService.GetAll();
 
