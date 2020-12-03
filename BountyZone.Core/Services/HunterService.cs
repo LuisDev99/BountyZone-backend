@@ -16,8 +16,8 @@ namespace BountyZone.Core.Services
 
         public HunterService(
             IRepository<Hunter> repository, 
-            IHunterRepository hunterRepository,
-            IRepository<Bounty> baseBountyRepository) : base(repository)
+            IRepository<Bounty> baseBountyRepository,
+            IHunterRepository hunterRepository) : base(repository)
         {
             _hunterRepository = hunterRepository;
             _baseBountyRepository = baseBountyRepository;

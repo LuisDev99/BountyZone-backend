@@ -85,7 +85,7 @@ namespace BountyZone.Core.Services
             }
             catch (Exception)
             {
-                return ServiceResult<T>.ErrorResult($"Unable to update properties for {nameof(T)} entity");
+                return ServiceResult<T>.ErrorResult($"Unable to update property {nameof(TProperty)} for {nameof(T)} entity");
             }
         }
     }

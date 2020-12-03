@@ -11,8 +11,8 @@ namespace BountyZone.Core.Services
 {
     public class LeaderService : BaseService<Leader>, ILeaderService
     {
-        private readonly IRepository<Bounty> _bountyBaseRepository;
         private readonly ILeaderRepository _leaderRepository;
+        private readonly IRepository<Bounty> _bountyBaseRepository;
 
         public LeaderService(
             IRepository<Leader> repository,
