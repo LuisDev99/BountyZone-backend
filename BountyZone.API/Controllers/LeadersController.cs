@@ -30,7 +30,7 @@ namespace BountyZone.API.Controllers
         {
             var serviceResponse = _leaderService.GetAll();
 
-            if(serviceResponse.ResponseCode == ResponseCode.Error)
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
             {
                 return BadRequest(serviceResponse.Error);
             }
@@ -71,7 +71,7 @@ namespace BountyZone.API.Controllers
 
             var leader = serviceResponse.Result;
 
-            return Ok( new LeaderDTO
+            return Ok(new LeaderDTO
             {
                 ID = leader.ID,
                 Money = leader.Money,
@@ -86,7 +86,8 @@ namespace BountyZone.API.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] AddLeader value)
         {
-            var serviceResponse = _leaderService.Create(new Leader { 
+            var serviceResponse = _leaderService.Create(new Leader
+            {
                 Money = value.Money,
                 PlayerID = value.PlayerID,
                 Reputation = value.Reputation,
@@ -106,8 +107,9 @@ namespace BountyZone.API.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] AddLeader value)
         {
-            var serviceResponse = _leaderService.Update(new Leader { 
-                ID = id, 
+            var serviceResponse = _leaderService.Update(new Leader
+            {
+                ID = id,
                 Money = value.Money,
                 PlayerID = value.PlayerID,
                 Reputation = value.Reputation,
@@ -130,8 +132,23 @@ namespace BountyZone.API.Controllers
 
         // DELETE api/<LeadersController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult Delete(int id)
         {
+            var serviceResponse = _leaderService.Delete(new Leader { 
+                ID = id
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            {
+                return NotFound(serviceResponse.Error);
+            }
+
+            return Ok();
         }
     }
 }
