@@ -6,9 +6,11 @@ namespace BountyZone.Core.Entities
 {
     public class Bounty : BaseEntity
     {
-        public DateTime Time { get; set; }
+        public int Price { get; set; }
 
         public bool Bribed { get; set; }
+
+        public DateTime Time { get; set; }
 
         public bool IsConfirmed { get; set; }
 
@@ -16,7 +18,7 @@ namespace BountyZone.Core.Entities
 
         public int VictimID { get; set; }
 
-        public int HunterID { get; set; }
+        public int? HunterID { get; set; }
 
         public Leader Leader { get; set; }
 
