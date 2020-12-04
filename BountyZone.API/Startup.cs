@@ -51,10 +51,12 @@ namespace BountyZone.API
 
             services.AddScoped<IHunterRepository, HunterRepository>();
             services.AddScoped<ILeaderRepository, LeaderRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
             
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IHunterService, HunterService>();
             services.AddScoped<ILeaderService, LeaderService>();
+            services.AddScoped<IPlayerService, PlayerService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
