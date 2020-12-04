@@ -29,11 +29,14 @@ namespace BountyZone.Core.Services
             }
         }
 
-        public ServiceResult<bool> DoesPlayerExists(string userEmail)
+        public ServiceResult<Player> GetPlayer(string userEmail)
         {
             var player = _playerRepository.FindPlayerByEmail(userEmail);
 
-            return ServiceResult<bool>.SuccessResult(player != null);
+            if (player == null)
+                return ServiceResult<Player>.NotFoundResult($"Player {userEmail} was not found");
+
+            return ServiceResult<Player>.SuccessResult(player);
         }
     }
 }

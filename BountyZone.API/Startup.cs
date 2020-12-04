@@ -32,8 +32,12 @@ namespace BountyZone.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddCors();
             services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(x =>
+                x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize
+                );
 
             services.AddControllers().AddNewtonsoftJson(x =>
                 x.UseMemberCasing()
@@ -73,6 +77,8 @@ namespace BountyZone.API
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
 
             app.UseEndpoints(endpoints =>
             {

@@ -25,13 +25,21 @@ namespace BountyZone.API.Controllers
 
         // GET api/<PlayersController>/5
         [HttpGet]
-        public ActionResult<bool> DoesPlayerExists([FromBody] string email)
+        public ActionResult<PlayerDTO> GetPlayerFromEmail([FromQuery] string email)
         {
-            var service = _playerService.DoesPlayerExists(email);
+            var service = _playerService.GetPlayer(email);
 
-            return service.Result == true
-                ? Ok()
-                : NotFound();
+            if (service.ResponseCode == ResponseCode.NotFound)
+                return NotFound(service.Error);
+
+            var player = service.Result;
+
+            return Ok(new PlayerDTO {
+                ID = player.ID,
+                Email = player.Email,
+                NickName = player.NickName,
+                PlayerRole = player.PlayerRole,                
+            });
 
         }
 
@@ -57,7 +65,7 @@ namespace BountyZone.API.Controllers
                 ID = newPlayer.ID,
                 Email = newPlayer.Email,
                 NickName = newPlayer.NickName,
-                PlayerRoleID = newPlayer.PlayerRoleID
+                PlayerRole = newPlayer.PlayerRole
             });
         }
     }

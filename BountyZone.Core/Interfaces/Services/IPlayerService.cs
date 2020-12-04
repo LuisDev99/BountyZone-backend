@@ -9,6 +9,6 @@ namespace BountyZone.Core.Interfaces.Services
     {
         ServiceResult<Player> CreatePlayerWithRole(Player player);
 
-        ServiceResult<bool> DoesPlayerExists(string userEmail);
+        ServiceResult<Player> GetPlayer(string userEmail);
     }
 }

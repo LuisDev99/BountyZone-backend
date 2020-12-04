@@ -1,5 +1,6 @@
 ﻿using BountyZone.Core.Entities;
 using BountyZone.Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,9 @@ namespace BountyZone.Infrastructure.Repositories
 
         public Player FindPlayerByEmail(string email)
         {
-            return _dbContext.Players.FirstOrDefault(player => player.Email == email);
+            return _dbContext.Players
+                    .Include(player => player.PlayerRole)
+                    .FirstOrDefault(player => player.Email == email);
         }
     }
 }
