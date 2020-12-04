@@ -1,4 +1,8 @@
-﻿using BountyZone.Core.Interfaces.Services;
+﻿using BountyZone.API.Models;
+using BountyZone.API.Models.InsertModels;
+using BountyZone.Core.Entities;
+using BountyZone.Core.Enums;
+using BountyZone.Core.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -33,8 +37,28 @@ namespace BountyZone.API.Controllers
 
         // POST api/<PlayersController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<PlayerDTO> CreatePlayerWithRole([FromBody] AddPlayer value)
         {
+            var service = _playerService.CreatePlayerWithRole(new Player {
+                Email = value.Email,
+                NickName = value.NickName,
+                PlayerRoleID = value.PlayerRoleID
+            });
+
+            if(service.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(service.Error);
+            }
+
+            var newPlayer = service.Result;
+
+            return Ok(new PlayerDTO
+            {
+                ID = newPlayer.ID,
+                Email = newPlayer.Email,
+                NickName = newPlayer.NickName,
+                PlayerRoleID = newPlayer.PlayerRoleID
+            });
         }
     }
 }
