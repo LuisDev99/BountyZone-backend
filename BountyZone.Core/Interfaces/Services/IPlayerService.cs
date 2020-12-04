@@ -7,6 +7,8 @@ namespace BountyZone.Core.Interfaces.Services
 {
     public interface IPlayerService
     {
+        ServiceResult<Player> CreatePlayerWithRole(Player player);
+
         ServiceResult<bool> DoesPlayerExists(string userEmail);
     }
 }
