@@ -63,6 +63,11 @@ namespace BountyZone.Infrastructure.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
             _dbContext.SaveChanges();
         }
+
+        public int SaveChanges()
+        {
+            return _dbContext.SaveChanges();
+        }
     }
 }
 
