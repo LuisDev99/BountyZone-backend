@@ -7,6 +7,8 @@ namespace BountyZone.Core.Interfaces.Repositories
 {
     public interface IPlayerRepository
     {
+        Player CreatePlayerWithRole(Player player);
+
         Player FindPlayerByEmail(string email);
     }
 }
