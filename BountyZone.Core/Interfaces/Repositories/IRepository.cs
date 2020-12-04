@@ -20,5 +20,7 @@ namespace BountyZone.Core.Interfaces
         void Update(T entity);
 
         void Patch<TProperty>(T entity, Expression<Func<T, TProperty>> propertyExpression);
+
+        int SaveChanges();
     }
 }
