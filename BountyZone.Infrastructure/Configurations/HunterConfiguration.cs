@@ -14,6 +14,10 @@ namespace BountyZone.Infrastructure.Configurations
             builder.HasKey(x => x.ID);
 
             builder.Property(x => x.ID).ValueGeneratedOnAdd();
+
+            builder.Property(x => x.Guns).HasDefaultValue(0);
+
+            builder.Property(x => x.Bribes).HasDefaultValue(0);
         }
     }
 }

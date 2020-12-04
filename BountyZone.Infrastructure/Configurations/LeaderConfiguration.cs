@@ -13,7 +13,15 @@ namespace BountyZone.Infrastructure.Configurations
         {
             builder.HasKey(x => x.ID);
 
-            builder.Property(x => x.ID).ValueGeneratedOnAdd();            
+            builder.Property(x => x.ID).ValueGeneratedOnAdd();
+
+            builder.Property(x => x.Money).HasDefaultValue(1000);
+
+            builder.Property(x => x.Reputation).HasDefaultValue(0);
+
+            builder.Property(x => x.SuccessfulAttacks).HasDefaultValue(0);
+
+            builder.Property(x => x.SuccessfulAttacks).HasDefaultValue(0);
         }
     }
 }
