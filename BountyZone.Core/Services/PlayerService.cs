@@ -17,6 +17,18 @@ namespace BountyZone.Core.Services
             _playerRepository = playerRepository;
         }
 
+        public ServiceResult<Player> CreatePlayerWithRole(Player player)
+        {
+            try
+            {
+                var newPlayer = _playerRepository.CreatePlayerWithRole(player);
+                return ServiceResult<Player>.SuccessResult(newPlayer);
+            }catch(Exception)
+            {
+                return ServiceResult<Player>.ErrorResult("Error. Player was not created.");
+            }
+        }
+
         public ServiceResult<bool> DoesPlayerExists(string userEmail)
         {
             var player = _playerRepository.FindPlayerByEmail(userEmail);
