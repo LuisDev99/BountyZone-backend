@@ -49,7 +49,7 @@ namespace BountyZone.API.Controllers
         }
 
         // GET: api/<LeadersController>
-        [HttpGet("/popular-victims")]
+        [HttpGet("popular-victims")]
         public ActionResult<IEnumerable<LeaderDTO>> GetPopularVictims()
         {
             var serviceResponse = _leaderService.GetPopularVictims();
@@ -65,6 +65,7 @@ namespace BountyZone.API.Controllers
             {
                 ID = victims.ID,
                 Money = victims.Money,
+                Player = victims.Player
                 PlayerID = victims.PlayerID,
                 Reputation = victims.Reputation,
                 SuccessfulAttacks = victims.SuccessfulAttacks,
