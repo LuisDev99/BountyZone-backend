@@ -10,5 +10,7 @@ namespace BountyZone.Core.Interfaces.Services
         ServiceResult<Player> CreatePlayerWithRole(Player player);
 
         ServiceResult<Player> GetPlayer(string userEmail);
+
+        ServiceResult<IEnumerable<PlayerRole>> GetPlayerRoles();
     }
 }
