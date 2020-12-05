@@ -1,4 +1,5 @@
 ﻿using BountyZone.Core.Entities;
+using BountyZone.Core.Helpers;
 using BountyZone.Core.Interfaces;
 using BountyZone.Core.Interfaces.Repositories;
 using BountyZone.Core.Interfaces.Services;
@@ -23,8 +24,8 @@ namespace BountyZone.Core.Services
             {
                 var newPlayer = _playerRepository.CreatePlayerWithRole(player);
                 return ServiceResult<Player>.SuccessResult(newPlayer);
-            }catch(Exception)
-            {
+            }catch(Exception e)
+            {                
                 return ServiceResult<Player>.ErrorResult("Error. Player was not created.");
             }
         }
@@ -37,6 +38,18 @@ namespace BountyZone.Core.Services
                 return ServiceResult<Player>.NotFoundResult($"Player {userEmail} was not found");
 
             return ServiceResult<Player>.SuccessResult(player);
+        }
+
+        public ServiceResult<IEnumerable<PlayerRole>> GetPlayerRoles()
+        {
+            var roles = _playerRepository.GetPlayerRoles();
+
+            if(Validators.IsListNullOrEmpty(roles))
+            {
+                return ServiceResult<IEnumerable<PlayerRole>>.ErrorResult("No player roles found");
+            }
+
+            return ServiceResult<IEnumerable<PlayerRole>>.SuccessResult(roles);
         }
     }
 }

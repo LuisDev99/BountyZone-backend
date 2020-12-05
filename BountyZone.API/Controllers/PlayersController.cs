@@ -43,6 +43,26 @@ namespace BountyZone.API.Controllers
 
         }
 
+        // GET api/<PlayersController>/5/roles
+        [HttpGet("roles")]
+        public ActionResult<IEnumerable<PlayerRoleDTO>> GetPlayerRoles()
+        {
+            var service = _playerService.GetPlayerRoles();
+
+            if (service.ResponseCode == ResponseCode.NotFound)
+                return NotFound(service.Error);
+
+            var roles = service.Result;
+
+            return Ok(roles.Select(role => new PlayerRoleDTO
+            {
+                ID = role.ID,
+                Type = role.Type,
+                ImageURL = role.ImageURL,
+                Description = role.Description,
+            }));
+        }
+
         // POST api/<PlayersController>
         [HttpPost]
         public ActionResult<PlayerDTO> CreatePlayerWithRole([FromBody] AddPlayer value)

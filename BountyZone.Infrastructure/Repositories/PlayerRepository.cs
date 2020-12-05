@@ -16,9 +16,12 @@ namespace BountyZone.Infrastructure.Repositories
 
         public Player CreatePlayerWithRole(Player player)
         {
+            using var dbContextTransaction = _dbContext.Database.BeginTransaction();
+
             PlayerRole playerRole = _dbContext.PlayerRoles.Find(player.PlayerRoleID);
 
             var newPlayer = _dbContext.Players.Add(player);
+            _dbContext.SaveChanges();
 
             if (playerRole.Type == "Hunter")
                 _dbContext.Hunters.Add(new Hunter { PlayerID = player.ID });
@@ -29,6 +32,8 @@ namespace BountyZone.Infrastructure.Repositories
 
             _dbContext.SaveChanges();
 
+            dbContextTransaction.Commit();
+
             return newPlayer.Entity;
         }
 
@@ -37,6 +42,11 @@ namespace BountyZone.Infrastructure.Repositories
             return _dbContext.Players
                     .Include(player => player.PlayerRole)
                     .FirstOrDefault(player => player.Email == email);
+        }
+
+        public IEnumerable<PlayerRole> GetPlayerRoles()
+        {
+            return _dbContext.PlayerRoles.ToList();
         }
     }
 }
