@@ -1,5 +1,6 @@
 ﻿using BountyZone.Core.Entities;
 using BountyZone.Core.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,11 @@ namespace BountyZone.Infrastructure.Repositories
 
         public IEnumerable<Leader> GetPopularVictims()
         {
-            return _dbContext.Leaders.OrderByDescending(leader => leader.Reputation).Take(50).ToList();
+            return _dbContext.Leaders
+                .Include(leader => leader.Player)
+                .OrderByDescending(leader => leader.Reputation)
+                .Take(50)
+                .ToList();
         }
      
     }
