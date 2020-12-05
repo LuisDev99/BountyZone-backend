@@ -11,6 +11,10 @@ namespace BountyZone.Core.Interfaces.Repositories
 
         Player FindPlayerByEmail(string email);
 
+        Leader FindLeaderByPlayerID(int id);
+
+        Hunter FindHunterByPlayerID(int id);
+
         IEnumerable<PlayerRole> GetPlayerRoles();
     }
 }
