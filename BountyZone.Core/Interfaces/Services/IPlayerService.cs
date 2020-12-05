@@ -11,6 +11,10 @@ namespace BountyZone.Core.Interfaces.Services
 
         ServiceResult<Player> GetPlayer(string userEmail);
 
+        ServiceResult<Leader> GetLeaderByPlayerID(int id);
+
+        ServiceResult<Hunter> GetHunterByPlayerID(int id);
+
         ServiceResult<IEnumerable<PlayerRole>> GetPlayerRoles();
     }
 }
