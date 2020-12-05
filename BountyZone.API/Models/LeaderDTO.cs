@@ -16,5 +16,8 @@ namespace BountyZone.API.Models
         public int SuccessfulDefends { get; set; }
 
         public int PlayerID { get; set; }
+
+        public Player Player;
+
     }
 }
