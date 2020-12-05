@@ -10,5 +10,7 @@ namespace BountyZone.Core.Interfaces.Repositories
         Player CreatePlayerWithRole(Player player);
 
         Player FindPlayerByEmail(string email);
+
+        IEnumerable<PlayerRole> GetPlayerRoles();
     }
 }
