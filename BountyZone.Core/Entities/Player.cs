@@ -6,6 +6,8 @@ namespace BountyZone.Core.Entities
 {
     public class Player : BaseEntity
     {
+        public string ImageURL { get; set; }
+
         public string Email { get; set; }
 
         public string NickName { get; set; }
