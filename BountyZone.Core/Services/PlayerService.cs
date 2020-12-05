@@ -40,6 +40,26 @@ namespace BountyZone.Core.Services
             return ServiceResult<Player>.SuccessResult(player);
         }
 
+        public ServiceResult<Leader> GetLeaderByPlayerID(int id)
+        {
+            var leader = _playerRepository.FindLeaderByPlayerID(id);
+
+            if (leader == null)
+                return ServiceResult<Leader>.NotFoundResult($"Leader with player ID {id} was not found");
+
+            return ServiceResult<Leader>.SuccessResult(leader);
+        }
+
+        public ServiceResult<Hunter> GetHunterByPlayerID(int id)
+        {
+            var hunter = _playerRepository.FindHunterByPlayerID(id);
+
+            if (hunter == null)
+                return ServiceResult<Hunter>.NotFoundResult($"Hunter with player ID {id} was not found");
+
+            return ServiceResult<Hunter>.SuccessResult(hunter);
+        }
+
         public ServiceResult<IEnumerable<PlayerRole>> GetPlayerRoles()
         {
             var roles = _playerRepository.GetPlayerRoles();
