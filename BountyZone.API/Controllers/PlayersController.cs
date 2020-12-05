@@ -43,7 +43,7 @@ namespace BountyZone.API.Controllers
 
         }
 
-        // GET api/<PlayersController>/5/roles
+        // GET api/<PlayersController>/roles
         [HttpGet("roles")]
         public ActionResult<IEnumerable<PlayerRoleDTO>> GetPlayerRoles()
         {
@@ -61,6 +61,48 @@ namespace BountyZone.API.Controllers
                 ImageURL = role.ImageURL,
                 Description = role.Description,
             }));
+        }
+
+        // GET api/<PlayersController>/5/leader
+        [HttpGet("{id}/leader")]
+        public ActionResult<LeaderDTO> GetLeaderByPlayerID(int id)
+        {
+            var service = _playerService.GetLeaderByPlayerID(id);
+
+            if (service.ResponseCode == ResponseCode.NotFound)
+                return NotFound(service.Error);
+
+            var leader = service.Result;
+
+            return Ok(new LeaderDTO
+            {
+                ID = leader.ID,
+                Money = leader.Money,
+                PlayerID = leader.PlayerID,
+                Reputation = leader.Reputation,
+                SuccessfulAttacks = leader.SuccessfulAttacks,
+                SuccessfulDefends = leader.SuccessfulDefends
+            });
+        }
+
+        // GET api/<PlayersController>/5/hunter
+        [HttpGet("{id}/hunter")]
+        public ActionResult<HunterDTO> GetHunterByPlayerID(int id)
+        {
+            var service = _playerService.GetHunterByPlayerID(id);
+
+            if (service.ResponseCode == ResponseCode.NotFound)
+                return NotFound(service.Error);
+
+            var hunter = service.Result;
+
+            return Ok(new HunterDTO
+            {
+                ID = hunter.ID,
+                Guns = hunter.Guns,
+                Bribes = hunter.Bribes,
+                PlayerID = hunter.PlayerID
+            });
         }
 
         // POST api/<PlayersController>

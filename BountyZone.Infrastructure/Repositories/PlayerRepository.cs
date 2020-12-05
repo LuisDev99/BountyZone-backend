@@ -37,6 +37,16 @@ namespace BountyZone.Infrastructure.Repositories
             return newPlayer.Entity;
         }
 
+        public Hunter FindHunterByPlayerID(int id)
+        {
+            return _dbContext.Hunters.FirstOrDefault(hunter => hunter.PlayerID == id);
+        }
+
+        public Leader FindLeaderByPlayerID(int id)
+        {
+            return _dbContext.Leaders.FirstOrDefault(leader => leader.PlayerID == id);
+        }
+
         public Player FindPlayerByEmail(string email)
         {
             return _dbContext.Players
