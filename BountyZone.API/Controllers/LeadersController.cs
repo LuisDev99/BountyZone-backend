@@ -61,15 +61,15 @@ namespace BountyZone.API.Controllers
 
             var victims = serviceResponse.Result;
 
-            return Ok(victims.Select(victims => new LeaderDTO
+            return Ok(victims.Select(victim => new LeaderDTO
             {
-                ID = victims.ID,
-                Money = victims.Money,
-                Player = victims.Player
-                PlayerID = victims.PlayerID,
-                Reputation = victims.Reputation,
-                SuccessfulAttacks = victims.SuccessfulAttacks,
-                SuccessfulDefends = victims.SuccessfulDefends
+                ID = victim.ID,
+                Money = victim.Money,
+                Player = victim.Player,
+                PlayerID = victim.PlayerID,
+                Reputation = victim.Reputation,
+                SuccessfulAttacks = victim.SuccessfulAttacks,
+                SuccessfulDefends = victim.SuccessfulDefends
             }));
         }
 
@@ -100,6 +100,30 @@ namespace BountyZone.API.Controllers
                 SuccessfulAttacks = leader.SuccessfulAttacks,
                 SuccessfulDefends = leader.SuccessfulDefends
             });
+        }
+
+        [HttpGet("{id}/bounties")]
+        public ActionResult<IEnumerable<BountyDTO>> GetLeaderBounties(int id)
+        {
+            var serviceResponse = _leaderService.GetLeaderBounties(id);
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            var bounties = serviceResponse.Result;
+
+            return Ok(bounties.Select(bounty => new BountyDTO
+            {
+                ID = bounty.ID,
+                Time = bounty.Time,
+                Price = bounty.Price,
+                Bribed = bounty.Bribed,
+                LeaderID = bounty.LeaderID,
+                HunterID = bounty.HunterID,
+                IsConfirmed = bounty.IsConfirmed,
+            }));
         }
 
         // POST api/<LeadersController>
