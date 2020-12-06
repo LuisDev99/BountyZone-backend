@@ -24,7 +24,7 @@ namespace BountyZone.Core.Services
             {
                 var newPlayer = _playerRepository.CreatePlayerWithRole(player);
                 return ServiceResult<Player>.SuccessResult(newPlayer);
-            }catch(Exception e)
+            }catch(Exception)
             {                
                 return ServiceResult<Player>.ErrorResult("Error. Player was not created.");
             }

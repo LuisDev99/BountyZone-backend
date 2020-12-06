@@ -35,6 +35,13 @@ namespace BountyZone.Core.Services
             return ServiceResult<IEnumerable<Leader>>.SuccessResult(victims);
         }
 
+        public ServiceResult<IEnumerable<Bounty>> GetLeaderBounties(int leaderID)
+        {
+            var bounties = _bountyBaseRepository.Filter(bounty => bounty.LeaderID == leaderID);
+
+            return ServiceResult<IEnumerable<Bounty>>.SuccessResult(bounties);
+        }
+
         public ServiceResult<Bounty> PlaceBountyOnVictim(Bounty bounty)
         {
             var newBounty = _bountyBaseRepository.Add(bounty);
