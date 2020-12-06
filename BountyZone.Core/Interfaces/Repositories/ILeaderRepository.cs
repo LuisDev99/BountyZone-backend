@@ -7,8 +7,10 @@ namespace BountyZone.Core.Interfaces.Repositories
 {
     public interface ILeaderRepository 
     {
-        IEnumerable<Leader> GetPopularVictims();
+        IEnumerable<Leader> GetPopularVictims();        
 
         Bounty PlaceBountyOnVictimAndDiscountPrice(Bounty bounty);
+
+        Bounty DefendFromBountyAndIncrementLeaderDefends(Bounty bounty);
     }
 }
