@@ -60,5 +60,17 @@ namespace BountyZone.Core.Services
 
             return ServiceResult<Bounty>.SuccessResult(newBounty);
         }
+
+        public ServiceResult<Bounty> DefendFromBounty(Bounty bounty)
+        {
+            var defendedBounty = _leaderRepository.DefendFromBountyAndIncrementLeaderDefends(bounty);
+
+            if (defendedBounty == null)
+            {
+                return ServiceResult<Bounty>.ErrorResult("The bounty could not be defended. Do you have enough money?");
+            }
+
+            return ServiceResult<Bounty>.SuccessResult(defendedBounty);
+        }
     }
 }
