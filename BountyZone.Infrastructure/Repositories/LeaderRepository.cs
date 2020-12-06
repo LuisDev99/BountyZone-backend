@@ -22,6 +22,21 @@ namespace BountyZone.Infrastructure.Repositories
                 .Take(50)
                 .ToList();
         }
-     
+
+        public Bounty PlaceBountyOnVictimAndDiscountPrice(Bounty bounty)
+        {
+            var leader = _dbContext.Leaders.Find(bounty.LeaderID);
+
+            if (leader.Money - bounty.Price < 0)
+                return null;
+
+            leader.Money -= bounty.Price;
+
+            var newBounty = _dbContext.Bounties.Add(bounty);
+
+            _dbContext.SaveChanges();
+
+            return newBounty.Entity;
+        }
     }
 }
