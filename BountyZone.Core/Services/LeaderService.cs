@@ -44,11 +44,11 @@ namespace BountyZone.Core.Services
 
         public ServiceResult<Bounty> PlaceBountyOnVictim(Bounty bounty)
         {
-            var newBounty = _bountyBaseRepository.Add(bounty);
+            var newBounty = _leaderRepository.PlaceBountyOnVictimAndDiscountPrice(bounty);
 
             if(newBounty == null)
             {
-                return ServiceResult<Bounty>.ErrorResult("The bounty could not be place on the victim");
+                return ServiceResult<Bounty>.ErrorResult("The bounty could not be place on the victim. Do you have enough money?");
             }
 
             return ServiceResult<Bounty>.SuccessResult(newBounty);
