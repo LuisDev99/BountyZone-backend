@@ -44,7 +44,8 @@ namespace BountyZone.Core.Services
 
         public ServiceResult<IEnumerable<Bounty>> GetBountiesAgainstLeader(int leaderID)
         {
-            var bounties = _bountyBaseRepository.Filter(bounty => bounty.VictimID == leaderID && bounty.IsConfirmed);
+            var bounties = _bountyBaseRepository.Filter(
+                bounty => bounty.VictimID == leaderID && bounty.IsConfirmed && !bounty.Bribed);
 
             return ServiceResult<IEnumerable<Bounty>>.SuccessResult(bounties);
         }
