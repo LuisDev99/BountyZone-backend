@@ -33,7 +33,7 @@ namespace BountyZone.API.Controllers
             if (serviceResponse.ResponseCode == ResponseCode.Error)
             {
                 return BadRequest(serviceResponse.Error);
-            }           
+            }
 
             var leaders = serviceResponse.Result;
 
@@ -126,6 +126,30 @@ namespace BountyZone.API.Controllers
             }));
         }
 
+        [HttpGet("{id}/opposing-bounties")]
+        public ActionResult<IEnumerable<BountyDTO>> GetBountiesAgainstLeader(int id)
+        {
+            var serviceResponse = _leaderService.GetBountiesAgainstLeader(id);
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
+            }
+
+            var bounties = serviceResponse.Result;
+
+            return Ok(bounties.Select(bounty => new BountyDTO
+            {
+                ID = bounty.ID,
+                Time = bounty.Time,
+                Price = bounty.Price,
+                Bribed = bounty.Bribed,
+                LeaderID = bounty.LeaderID,
+                HunterID = bounty.HunterID,
+                IsConfirmed = bounty.IsConfirmed,
+            }));
+        }
+
         // POST api/<LeadersController>
         [HttpPost]
         public ActionResult Post([FromBody] AddLeader value)
@@ -198,7 +222,8 @@ namespace BountyZone.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var serviceResponse = _leaderService.Delete(new Leader { 
+            var serviceResponse = _leaderService.Delete(new Leader
+            {
                 ID = id
             });
 
