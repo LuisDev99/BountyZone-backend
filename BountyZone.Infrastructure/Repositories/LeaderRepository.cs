@@ -38,5 +38,26 @@ namespace BountyZone.Infrastructure.Repositories
 
             return newBounty.Entity;
         }
+
+        public Bounty DefendFromBountyAndIncrementLeaderDefends(Bounty bounty)
+        {
+            var leader = _dbContext.Leaders.Find(bounty.VictimID);
+
+            if (leader.Money - bounty.Price < 0)
+                return null;
+
+            leader.Money -= bounty.Price;
+            leader.SuccessfulDefends++;
+
+            bounty.Bribed = true;
+
+            _dbContext.Bounties.Attach(bounty);
+            _dbContext.Entry(bounty).Property(b => b.Bribed).IsModified = true;
+
+            _dbContext.Entry(bounty).State = EntityState.Modified;
+            _dbContext.SaveChanges();
+
+            return bounty;
+        }
     }
 }
