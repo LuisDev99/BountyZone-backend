@@ -14,14 +14,11 @@ namespace BountyZone.Infrastructure.Repositories
         {
         }
 
-        public Bounty ConfirmBounty(int bountyID, int hunterID)
+        public Bounty ConfirmBounty(Bounty bounty)
         {
-            var modifiedBounty = new Bounty
-            {
-                ID = bountyID,
-                IsConfirmed = true,
-                HunterID = hunterID
-            };
+            var modifiedBounty = bounty;
+
+            modifiedBounty.IsConfirmed = true;
 
             _dbContext.Attach(modifiedBounty);
 

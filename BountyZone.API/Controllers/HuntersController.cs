@@ -62,8 +62,10 @@ namespace BountyZone.API.Controllers
                 ID = bounty.ID,
                 Time = bounty.Time,
                 Price = bounty.Price,
+                Bribed = bounty.Bribed,                
                 LeaderID = bounty.LeaderID,
-                VictimID = bounty.VictimID,                
+                VictimID = bounty.VictimID,               
+                IsConfirmed = bounty.IsConfirmed,
             }));
         }
 
@@ -138,6 +140,28 @@ namespace BountyZone.API.Controllers
             if (serviceResponse.ResponseCode == ResponseCode.NotFound)
             {
                 return NotFound(serviceResponse.Error);
+            }
+
+            return Ok();
+        }
+
+        // PATCH api/<HuntersController>/5/confirm-bounty
+        [HttpPatch("{id}/confirm-bounty")]
+        public ActionResult ConfirmBounty(int id, [FromBody] BountyDTO value)
+        {
+            var serviceResponse = _hunterService.ConfirmBounty(new Bounty
+            {
+                ID = value.ID,
+                Time = value.Time,
+                Price = value.Price,
+                VictimID = value.VictimID,
+                LeaderID = value.LeaderID,
+                HunterID = id,
+            });
+
+            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            {
+                return BadRequest(serviceResponse.Error);
             }
 
             return Ok();
