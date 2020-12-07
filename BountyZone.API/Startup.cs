@@ -49,14 +49,14 @@ namespace BountyZone.API
             });
 
             services.AddDbContext<BountyZoneDbContext>((options) =>
-                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")));
+                 options.UseNpgsql(Configuration.GetConnectionString("BountyZoneDbContext")));
 
             services.AddScoped(typeof(IRepository<>), typeof(EntityFrameworkRepository<>));
 
             services.AddScoped<IHunterRepository, HunterRepository>();
             services.AddScoped<ILeaderRepository, LeaderRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
-            
+
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IHunterService, HunterService>();
             services.AddScoped<ILeaderService, LeaderService>();
@@ -65,12 +65,9 @@ namespace BountyZone.API
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BountyZone.API v1"));
-            }
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BountyZone.API v1"));
 
             app.UseHttpsRedirection();
 
