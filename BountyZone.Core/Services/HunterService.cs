@@ -23,11 +23,11 @@ namespace BountyZone.Core.Services
             _baseBountyRepository = baseBountyRepository;
         }
 
-        public ServiceResult<Bounty> ConfirmBounty(int bountyID, int hunterID)
+        public ServiceResult<Bounty> ConfirmBounty(Bounty bounty)
         {
             try
             {
-                var modifiedBounty = _hunterRepository.ConfirmBounty(bountyID, hunterID);
+                var modifiedBounty = _hunterRepository.ConfirmBounty(bounty);
                 return ServiceResult<Bounty>.SuccessResult(modifiedBounty);
             }catch(Exception)
             {
@@ -38,12 +38,7 @@ namespace BountyZone.Core.Services
         public ServiceResult<IEnumerable<Bounty>> GetAvailableBounties()
         {
             var bounties = _baseBountyRepository.Filter(bounty => !bounty.IsConfirmed && System.DateTime.UtcNow < bounty.Time);
-
-            if(Validators.IsListNullOrEmpty(bounties))
-            {
-                return ServiceResult<IEnumerable<Bounty>>.NotFoundResult("There are no victims at the moment...");
-            }
-
+           
             return ServiceResult<IEnumerable<Bounty>>.SuccessResult(bounties);
         }
     }
