@@ -7,6 +7,6 @@ namespace BountyZone.Core.Interfaces.Repositories
 {
     public interface IHunterRepository
     {
-        Bounty ConfirmBounty(int bountyID, int hunterID);
+        Bounty ConfirmBounty(Bounty bounty);
     }
 }
