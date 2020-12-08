@@ -28,14 +28,14 @@ namespace BountyZone.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<LeaderDTO>> Get()
         {
-            var serviceResponse = _leaderService.GetAll();
+            var service = _leaderService.GetAll();
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            var leaders = serviceResponse.Result;
+            var leaders = service.Result;
 
             return Ok(leaders.Select(leader => new LeaderDTO
             {
@@ -52,14 +52,14 @@ namespace BountyZone.API.Controllers
         [HttpGet("popular-victims")]
         public ActionResult<IEnumerable<LeaderDTO>> GetPopularVictims()
         {
-            var serviceResponse = _leaderService.GetPopularVictims();
+            var service = _leaderService.GetPopularVictims();
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            var victims = serviceResponse.Result;
+            var victims = service.Result;
 
             return Ok(victims.Select(victim => new LeaderDTO
             {
@@ -77,19 +77,19 @@ namespace BountyZone.API.Controllers
         [HttpGet("{id}")]
         public ActionResult<LeaderDTO> Get(int id)
         {
-            var serviceResponse = _leaderService.GetByID(id);
+            var service = _leaderService.GetByID(id);
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            if (service.ResponseCode == ResponseCode.NotFound)
             {
-                return NotFound(serviceResponse.Error);
+                return NotFound(service.Error);
             }
 
-            var leader = serviceResponse.Result;
+            var leader = service.Result;
 
             return Ok(new LeaderDTO
             {
@@ -105,14 +105,14 @@ namespace BountyZone.API.Controllers
         [HttpGet("{id}/bounties")]
         public ActionResult<IEnumerable<BountyDTO>> GetLeaderBounties(int id)
         {
-            var serviceResponse = _leaderService.GetLeaderBounties(id);
+            var service = _leaderService.GetLeaderBounties(id);
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            var bounties = serviceResponse.Result;
+            var bounties = service.Result;
 
             return Ok(bounties.Select(bounty => new BountyDTO
             {
@@ -130,14 +130,14 @@ namespace BountyZone.API.Controllers
         [HttpGet("{id}/opposing-bounties")]
         public ActionResult<IEnumerable<BountyDTO>> GetBountiesAgainstLeader(int id)
         {
-            var serviceResponse = _leaderService.GetBountiesAgainstLeader(id);
+            var service = _leaderService.GetBountiesAgainstLeader(id);
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            var bounties = serviceResponse.Result;
+            var bounties = service.Result;
 
             return Ok(bounties.Select(bounty => new BountyDTO
             {
@@ -156,7 +156,7 @@ namespace BountyZone.API.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] AddLeader value)
         {
-            var serviceResponse = _leaderService.Create(new Leader
+            var service = _leaderService.Create(new Leader
             {
                 Money = value.Money,
                 PlayerID = value.PlayerID,
@@ -165,9 +165,9 @@ namespace BountyZone.API.Controllers
                 SuccessfulDefends = value.SuccessfulDefends,
             });
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
             return Ok();
@@ -177,7 +177,7 @@ namespace BountyZone.API.Controllers
         [HttpPost("place-bounty")]
         public ActionResult PlaceBountyOnVictim([FromBody] AddBounty value)
         {
-            var serviceResponse = _leaderService.PlaceBountyOnVictim(new Bounty
+            var service = _leaderService.PlaceBountyOnVictim(new Bounty
             {
                 Time = value.Time,
                 Price = value.Price,
@@ -185,9 +185,9 @@ namespace BountyZone.API.Controllers
                 VictimID = value.VictimID,
             });
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
             return Ok();
@@ -197,7 +197,7 @@ namespace BountyZone.API.Controllers
         [HttpPut("{id}")]
         public ActionResult Put(int id, [FromBody] AddLeader value)
         {
-            var serviceResponse = _leaderService.Update(new Leader
+            var service = _leaderService.Update(new Leader
             {
                 ID = id,
                 Money = value.Money,
@@ -207,14 +207,14 @@ namespace BountyZone.API.Controllers
                 SuccessfulDefends = value.SuccessfulDefends,
             });
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            if (service.ResponseCode == ResponseCode.NotFound)
             {
-                return NotFound(serviceResponse.Error);
+                return NotFound(service.Error);
             }
 
             return Ok();
@@ -224,7 +224,7 @@ namespace BountyZone.API.Controllers
         [HttpPatch("defend-bounty")]
         public ActionResult DefendFromBounty([FromBody] BountyDTO value)
         {
-            var serviceResponse = _leaderService.DefendFromBounty(new Bounty
+            var service = _leaderService.DefendFromBounty(new Bounty
             {
                 ID = value.ID,
                 Time = value.Time,
@@ -235,9 +235,9 @@ namespace BountyZone.API.Controllers
                 IsConfirmed = value.IsConfirmed,
             });
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
             return Ok();
@@ -247,19 +247,19 @@ namespace BountyZone.API.Controllers
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
-            var serviceResponse = _leaderService.Delete(new Leader
+            var service = _leaderService.Delete(new Leader
             {
                 ID = id
             });
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            if (serviceResponse.ResponseCode == ResponseCode.NotFound)
+            if (service.ResponseCode == ResponseCode.NotFound)
             {
-                return NotFound(serviceResponse.Error);
+                return NotFound(service.Error);
             }
 
             return Ok();

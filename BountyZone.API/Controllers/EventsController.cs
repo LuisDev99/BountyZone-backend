@@ -25,14 +25,14 @@ namespace BountyZone.API.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<EventDTO>> Get()
         {
-            var serviceResponse = _eventService.GetAll();
+            var service = _eventService.GetAll();
 
-            if (serviceResponse.ResponseCode == ResponseCode.Error)
+            if (service.ResponseCode == ResponseCode.Error)
             {
-                return BadRequest(serviceResponse.Error);
+                return BadRequest(service.Error);
             }
 
-            var events = serviceResponse.Result;
+            var events = service.Result;
 
             return Ok(events.Select(eventt => new EventDTO
             {
